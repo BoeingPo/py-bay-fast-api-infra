@@ -1,0 +1,23 @@
+# Copy this file to terraform.tfvars and fill in your values.
+# terraform.tfvars is gitignored — never commit real credentials.
+
+vps_ip   = "1.2.3.4"
+ssh_user = "root"
+
+# --- SSH auth: provide ONE of the two below, leave the other empty ---
+ssh_private_key_path = ""              # option A: path to private key, e.g. "~/.ssh/id_rsa"
+ssh_password         = ""              # option B: VPS password
+
+k3s_version          = "v1.30.0+k3s1"
+argocd_gitops_repo   = "https://github.com/BoeingPo/py-bay-fast-api-gitops"
+
+# true (default): this VPS already runs k3s + ArgoCD for another project (e.g. go-ledger-x-infra).
+# Only verifies the cluster and registers the py-bay-fast-api-app-of-apps Application — nothing else.
+# Set to false only when bootstrapping a brand-new, separate VPS from scratch.
+join_existing_cluster = true
+
+# Below this line only matters if join_existing_cluster = false AND the gitops/app repos are private.
+# py-bay-fast-api repos are public, so the defaults (false / unset) are correct as-is.
+setup_github_creds   = false
+github_username      = "BoeingPo"
+github_token         = ""                          # GitHub PAT with repo scope
